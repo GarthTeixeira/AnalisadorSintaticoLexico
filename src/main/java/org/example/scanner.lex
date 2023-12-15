@@ -13,9 +13,13 @@ import java_cup.runtime.Symbol;
 %{
 
       private Symbol addToken(int tokenType,String value, String vaueType, int line, int column) {
-        System.out.print(vaueType + yytext() + " linha:" + String.valueOf(line) + ", coluna:"+ String.valueOf(column) +" \n");
+        //System.out.print(vaueType + yytext() + " linha:" + String.valueOf(line) + ", coluna:"+ String.valueOf(column) +" \n");
         return new Symbol(tokenType,line,column, value);
       }
+
+       private Symbol addToken(int tokenType,Integer value, String vaueType, int line, int column) {
+              return new Symbol(tokenType,line,column, value);
+           }
 %}
 
 letter = [A-Za-z]
@@ -112,7 +116,10 @@ colon = ":"
 {unsignedRightShift} {return addToken(TiposDeToken.OPERADOR_UNSIGNED_RIGHT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);}
 {semicolon} {return addToken(TiposDeToken.SEMICOLON, yytext(),"Ponto e vírgula", yyline, yycolumn);}
 {identifier} {return addToken(TiposDeToken.IDENTIFICADOR, yytext(),"Identificador " ,yyline , yycolumn);}
-{constant} {return addToken(TiposDeToken.CONSTANT, yytext(),"Constante " ,yyline , yycolumn);}
+{constant} {
+    int aux = Integer.parseInt(yytext());
+    return addToken(TiposDeToken.CONSTANT, new Integer(aux),"Constante " ,yyline , yycolumn);
+}
 {literal} {return addToken(TiposDeToken.LITERAL, yytext(),"Literal " ,yyline , yycolumn);}
 {interrogation} {return addToken(TiposDeToken.INTERROGATION, yytext(),"Interrogação " ,yyline , yycolumn);}
 {colon} {return addToken(TiposDeToken.COLON, yytext(),"Dois pontos " ,yyline , yycolumn);}

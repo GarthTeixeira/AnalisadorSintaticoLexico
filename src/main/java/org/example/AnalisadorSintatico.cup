@@ -1,6 +1,11 @@
 package org.example ;
 
 import java_cup.runtime.*;
+import java.util.HashMap;
+
+parser code {:
+  private HashMap<String,Integer> symT = new HashMap<String,Integer>();
+:}
 
 terminal PALAVRA_RESERVADA_PROGRAM, IDENTIFICADOR, PALAVRA_RESERVADA_DECLARE, PALAVRA_RESERVADA_BEGIN, PALAVRA_RESERVADA_END,
 PALAVRA_RESERVADA_INTEGER, PALAVRA_RESERVADA_DECIMAL, PALAVRA_RESERVADA_IF, PALAVRA_RESERVADA_THEN, PALAVRA_RESERVADA_ELSE,
@@ -8,7 +13,9 @@ PALAVRA_RESERVADA_DO, PALAVRA_RESERVADA_WHILE, PALAVRA_RESERVADA_FOR, PALAVRA_RE
 PALAVRA_RESERVADA_WRITE, LEFT_PARENTHESIS, RIGHT_PARENTHESIS, LITERAL, OPERADOR_ASSIGN, SEMICOLON, COLON, OPERADOR_EQUAL,
 OPERADOR_GREAT, OPERADOR_GREATEQUAL, OPERADOR_LESS, OPERADOR_LESSEQUAL, OPERADOR_DIFFERENT, OPERADOR_ADD, OPERADOR_MINUS,
 PALAVRA_RESERVADA_OR, OPERADOR_MULT, OPERADOR_PART, PALAVRA_RESERVADA_MOD, PALAVRA_RESERVADA_AND, OPERADOR_LEFT_SHIFT,
-OPERADOR_RIGHT_SHIFT, OPERADOR_UNSIGNED_RIGHT_SHIFT, OPERADOR_UNSIGNED_LEFT_SHIFT, PALAVRA_RESERVADA_NOT,COMMA, INTERROGATION, CONSTANT;
+OPERADOR_RIGHT_SHIFT, OPERADOR_UNSIGNED_RIGHT_SHIFT, OPERADOR_UNSIGNED_LEFT_SHIFT, PALAVRA_RESERVADA_NOT,COMMA, INTERROGATION;
+
+terminal Integer CONSTANT;
 
 non terminal program, body, decl_list, decl, ident_list, type, stmt_list, stmt, assign_stmt, if_stmt, condition,
 do_while_stmt, stmt_suffix, for_stmt, while_stmt, read_stmt, write_stmt, writable, expression, simple_expr, term,
@@ -32,7 +39,12 @@ stmt_list ::= stmt SEMICOLON | stmt_list stmt SEMICOLON ;
 
 stmt ::= assign_stmt | if_stmt | while_stmt | do_while_stmt| for_stmt | read_stmt | write_stmt;
 
-assign_stmt ::= IDENTIFICADOR OPERADOR_ASSIGN simple_expr;
+assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
+                    if (smpl_ex instanceof String)
+                        System.out.println("Erro: Atribuicao de string a variavel inteira");
+                    else
+                        symT.put(id.toString(), (Integer)smpl_ex);
+:};
 
 if_stmt ::= PALAVRA_RESERVADA_IF condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_END | PALAVRA_RESERVADA_IF
 condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_ELSE stmt_list PALAVRA_RESERVADA_END;
@@ -50,24 +62,95 @@ while_stmt ::= PALAVRA_RESERVADA_WHILE condition PALAVRA_RESERVADA_DO stmt_list 
 
 read_stmt ::= PALAVRA_RESERVADA_READ LEFT_PARENTHESIS IDENTIFICADOR RIGHT_PARENTHESIS;
 
-write_stmt ::= PALAVRA_RESERVADA_WRITE LEFT_PARENTHESIS writable RIGHT_PARENTHESIS;
+write_stmt ::= PALAVRA_RESERVADA_WRITE LEFT_PARENTHESIS writable:w RIGHT_PARENTHESIS {:System.out.println(w);:};
 
-writable ::= simple_expr | LITERAL;
+writable ::= expression:ex{:RESULT = ex;:} | LITERAL:l{:RESULT = ((String) l).toString().replaceAll("\"","");:};
 
-expression ::= simple_expr | simple_expr relop simple_expr | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS INTERROGATION simple_expr COLON simple_expr;
+expression ::= simple_expr:smpl_ex
+                {:RESULT = smpl_ex;:}
+               |
+               simple_expr:smpl_ex_a relop:relop simple_expr:smpl_ex_b
+               {:
+                    if (relop.equals("="))
+                        RESULT = new Boolean(((Integer)smpl_ex_a).intValue() == ((Integer)smpl_ex_b).intValue());
+                    else if (relop.equals(">"))
+                        RESULT = new Boolean(((Integer)smpl_ex_a).intValue() > ((Integer)smpl_ex_b).intValue());
+                    else if (relop.equals(">="))
+                        RESULT = new Boolean(((Integer)smpl_ex_a).intValue() >= ((Integer)smpl_ex_b).intValue());
+                    else if (relop.equals("<"))
+                        RESULT = new Boolean(((Integer)smpl_ex_a).intValue() < ((Integer)smpl_ex_b).intValue());
+                    else if (relop.equals("<="))
+                        RESULT = new Boolean(((Integer)smpl_ex_a).intValue() <= ((Integer)smpl_ex_b).intValue());
+                    else if (relop.equals("<>"))
+                        RESULT = new Boolean(((Integer)smpl_ex_a).intValue() != ((Integer)smpl_ex_b).intValue());
+               :}
+               | LEFT_PARENTHESIS expression:exp RIGHT_PARENTHESIS INTERROGATION simple_expr:smpl_ax_a COLON simple_expr:smpl_ax_b
+               {:
+                    RESULT = ((Boolean)exp).booleanValue() ? smpl_ax_a : smpl_ax_b;
+               :};
 
-simple_expr ::= term | simple_expr addop term ;
+simple_expr ::= term:t
+                {:RESULT = t;:}
+                |
+                simple_expr:smpl_ex addop:addop term:t
+                {:
+                    if (addop.equals("+"))
+                        RESULT = ((Integer)smpl_ex).intValue() + ((Integer)t).intValue();
+                    else if (addop.equals("-"))
+                        RESULT = ((Integer)smpl_ex).intValue() - ((Integer)t).intValue();
+                    else if (addop.equals("or"))
+                        RESULT = ((Boolean)smpl_ex).booleanValue() || ((Boolean)t).booleanValue();
+                :};
 
-term ::= factor_a | term mulop factor_a;
+term ::= factor_a:f_a
+             {:RESULT = f_a;:}
+             |
+             term:t mulop:mulop factor_a:f_a
+             {:
+                if (mulop.equals("*"))
+                    RESULT = ((Integer)t).intValue() * ((Integer)f_a).intValue();
+                else if (mulop.equals("/"))
+                    RESULT = ((Integer)t).intValue() / ((Integer)f_a).intValue();
+                else if (mulop.equals("%"))
+                    RESULT = ((Integer)t).intValue() % ((Integer)f_a).intValue();
+                else if (mulop.equals("and"))
+                    RESULT = ((Boolean)t).booleanValue() && ((Boolean)f_a).booleanValue();
+             :};
 
-factor_a ::= factor | PALAVRA_RESERVADA_NOT factor | OPERADOR_MINUS factor;
+factor_a ::= factor:f
+            {:RESULT = f;:}
+             |
+             PALAVRA_RESERVADA_NOT factor:f
+             {: if (f instanceof Boolean)
+                RESULT = !((Boolean)f).booleanValue();
+             :}
+             |
+             OPERADOR_MINUS factor:f
+             {: if ( f instanceof Integer)
+                RESULT = -((Integer)f).intValue();
+              :};
 
-factor ::= IDENTIFICADOR | CONSTANT | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS;
+factor ::=  IDENTIFICADOR:id
+            {:
+                if (symT.containsKey(id.toString()))
+                    RESULT = symT.get(id.toString());
+                else
+                    System.out.println("Erro: Variavel nao declarada");
+            :}
+            |
+            CONSTANT:c
+            {:RESULT = c;:}
+            | LEFT_PARENTHESIS expression:e RIGHT_PARENTHESIS
+            {:RESULT = e;:};
 
-relop ::= OPERADOR_EQUAL | OPERADOR_GREAT | OPERADOR_GREATEQUAL | OPERADOR_LESS | OPERADOR_LESSEQUAL | OPERADOR_DIFFERENT;
+relop ::= OPERADOR_EQUAL:op_equal{:RESULT = op_equal;:} | OPERADOR_GREAT:op_greater{:RESULT = op_greater;:} |
+    OPERADOR_GREATEQUAL:op_greater_equal{:RESULT = op_greater_equal;:} | OPERADOR_LESS:op_less{:RESULT = op_less;:} |
+    OPERADOR_LESSEQUAL:op_less_equal{:RESULT = op_less_equal;:} | OPERADOR_DIFFERENT:op_not_equal{:RESULT = op_not_equal;:};
 
-addop ::= OPERADOR_ADD | OPERADOR_MINUS | PALAVRA_RESERVADA_OR;
+addop ::= OPERADOR_ADD:op_add{:RESULT = op_add;:} | OPERADOR_MINUS:op_minus{:RESULT = op_minus;:} |
+    PALAVRA_RESERVADA_OR:op_or{:RESULT = op_or;:};
 
-mulop ::= OPERADOR_MULT | OPERADOR_PART | PALAVRA_RESERVADA_MOD | PALAVRA_RESERVADA_AND;
+mulop ::= OPERADOR_MULT:op_mult{:RESULT = op_mult;:} | OPERADOR_PART:op_div{:RESULT = op_div;:} |
+    PALAVRA_RESERVADA_MOD:op_mod{:RESULT = op_mod;:} | PALAVRA_RESERVADA_AND:op_and{:RESULT = op_and;:};
 
 shiftop ::= OPERADOR_LEFT_SHIFT | OPERADOR_RIGHT_SHIFT | OPERADOR_UNSIGNED_RIGHT_SHIFT | OPERADOR_UNSIGNED_LEFT_SHIFT;
