@@ -65,11 +65,11 @@ class AnalisadorLexico implements java_cup.runtime.Scanner {
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\2\1\1\2\2\1\22\0\1\1\1\0\1\3"+
     "\2\0\1\4\2\0\1\5\1\6\1\7\1\10\1\11"+
-    "\1\12\1\0\1\13\12\14\1\15\1\16\1\17\1\20"+
-    "\1\21\1\22\1\0\32\23\6\0\1\24\1\25\1\26"+
-    "\1\27\1\30\1\31\1\32\1\33\1\34\2\23\1\35"+
-    "\1\36\1\37\1\40\1\41\1\23\1\42\1\43\1\44"+
-    "\2\23\1\45\3\23\12\0\1\2\u01a2\0\2\2\326\0"+
+    "\1\12\1\13\1\14\12\15\1\16\1\17\1\20\1\21"+
+    "\1\22\1\23\1\0\32\24\6\0\1\25\1\26\1\27"+
+    "\1\30\1\31\1\32\1\33\1\34\1\35\2\24\1\36"+
+    "\1\37\1\40\1\41\1\42\1\24\1\43\1\44\1\45"+
+    "\2\24\1\46\3\24\12\0\1\2\u01a2\0\2\2\326\0"+
     "\u0100\2";
 
   private static int [] zzUnpackcmap_blocks() {
@@ -99,15 +99,16 @@ class AnalisadorLexico implements java_cup.runtime.Scanner {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\2\1\1\3\1\4\1\5\1\6"+
     "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16"+
-    "\1\17\1\20\16\21\1\0\1\22\1\0\1\23\1\24"+
-    "\1\25\1\26\1\27\1\30\1\31\3\21\1\32\3\21"+
-    "\1\33\3\21\1\34\3\21\1\35\2\21\1\36\1\37"+
-    "\1\40\3\21\1\41\1\42\1\21\1\43\1\44\10\21"+
-    "\1\45\2\21\1\46\1\47\2\21\1\50\4\21\1\51"+
-    "\1\52\4\21\1\53\1\54\1\55\1\56";
+    "\1\17\1\20\16\21\1\0\1\22\1\0\1\23\1\0"+
+    "\1\24\1\25\1\26\1\27\1\30\1\31\1\32\3\21"+
+    "\1\33\3\21\1\34\3\21\1\35\3\21\1\36\2\21"+
+    "\1\37\1\0\1\40\1\41\1\42\3\21\1\43\1\44"+
+    "\1\21\1\45\1\46\10\21\1\47\2\21\1\50\1\51"+
+    "\2\21\1\52\4\21\1\53\1\54\4\21\1\55\1\56"+
+    "\1\57\1\60";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[102];
+    int [] result = new int[106];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -132,22 +133,23 @@ class AnalisadorLexico implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\46\0\46\0\114\0\162\0\46\0\46\0\46"+
-    "\0\46\0\46\0\46\0\46\0\230\0\276\0\46\0\344"+
-    "\0\46\0\u010a\0\46\0\u0130\0\u0156\0\u017c\0\u01a2\0\u01c8"+
-    "\0\u01ee\0\u0214\0\u023a\0\u0260\0\u0286\0\u02ac\0\u02d2\0\u02f8"+
-    "\0\u031e\0\114\0\46\0\162\0\162\0\46\0\u0344\0\46"+
-    "\0\46\0\46\0\u036a\0\u0390\0\u03b6\0\u03dc\0\u0130\0\u0402"+
-    "\0\u0428\0\u044e\0\u0130\0\u0474\0\u049a\0\u04c0\0\u0130\0\u04e6"+
-    "\0\u050c\0\u0532\0\u0130\0\u0558\0\u057e\0\46\0\46\0\u0130"+
-    "\0\u05a4\0\u05ca\0\u05f0\0\u0130\0\u0130\0\u0616\0\u0130\0\u0130"+
-    "\0\u063c\0\u0662\0\u0688\0\u06ae\0\u06d4\0\u06fa\0\u0720\0\u0746"+
-    "\0\u0130\0\u076c\0\u0792\0\u0130\0\u0130\0\u07b8\0\u07de\0\u0130"+
-    "\0\u0804\0\u082a\0\u0850\0\u0876\0\u0130\0\u0130\0\u089c\0\u08c2"+
-    "\0\u08e8\0\u090e\0\u0130\0\u0130\0\u0130\0\u0130";
+    "\0\0\0\47\0\47\0\116\0\165\0\47\0\47\0\47"+
+    "\0\47\0\47\0\47\0\47\0\234\0\303\0\47\0\352"+
+    "\0\47\0\u0111\0\47\0\u0138\0\u015f\0\u0186\0\u01ad\0\u01d4"+
+    "\0\u01fb\0\u0222\0\u0249\0\u0270\0\u0297\0\u02be\0\u02e5\0\u030c"+
+    "\0\u0333\0\116\0\47\0\165\0\165\0\u035a\0\u0381\0\47"+
+    "\0\u03a8\0\47\0\47\0\47\0\u03cf\0\u03f6\0\u041d\0\u0444"+
+    "\0\u0138\0\u046b\0\u0492\0\u04b9\0\u0138\0\u04e0\0\u0507\0\u052e"+
+    "\0\u0138\0\u0555\0\u057c\0\u05a3\0\u0138\0\u05ca\0\u05f1\0\u035a"+
+    "\0\u0381\0\47\0\47\0\u0138\0\u0618\0\u063f\0\u0666\0\u0138"+
+    "\0\u0138\0\u068d\0\u0138\0\u0138\0\u06b4\0\u06db\0\u0702\0\u0729"+
+    "\0\u0750\0\u0777\0\u079e\0\u07c5\0\u0138\0\u07ec\0\u0813\0\u0138"+
+    "\0\u0138\0\u083a\0\u0861\0\u0138\0\u0888\0\u08af\0\u08d6\0\u08fd"+
+    "\0\u0138\0\u0138\0\u0924\0\u094b\0\u0972\0\u0999\0\u0138\0\u0138"+
+    "\0\u0138\0\u0138";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[102];
+    int [] result = new int[106];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -171,56 +173,57 @@ class AnalisadorLexico implements java_cup.runtime.Scanner {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\0\1\4\1\5\1\6\1\7\1\10"+
-    "\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20"+
-    "\1\21\1\22\1\23\1\24\1\25\1\26\1\24\1\27"+
-    "\1\30\1\31\2\24\1\32\1\24\1\33\1\34\1\35"+
-    "\1\36\1\37\1\24\1\40\1\41\46\0\3\42\1\43"+
-    "\42\42\4\44\1\45\41\44\14\0\1\15\51\0\1\46"+
-    "\44\0\1\47\1\50\1\51\44\0\1\52\1\53\40\0"+
-    "\1\24\6\0\23\24\14\0\1\24\6\0\14\24\1\54"+
-    "\6\24\14\0\1\24\6\0\5\24\1\55\15\24\14\0"+
-    "\1\24\6\0\5\24\1\56\7\24\1\57\5\24\14\0"+
-    "\1\24\6\0\12\24\1\60\1\24\1\61\6\24\14\0"+
-    "\1\24\6\0\15\24\1\62\5\24\14\0\1\24\6\0"+
-    "\6\24\1\63\5\24\1\64\6\24\14\0\1\24\6\0"+
-    "\15\24\1\65\5\24\14\0\1\24\6\0\15\24\1\66"+
-    "\5\24\14\0\1\24\6\0\17\24\1\67\3\24\14\0"+
-    "\1\24\6\0\17\24\1\70\3\24\14\0\1\24\6\0"+
-    "\5\24\1\71\15\24\14\0\1\24\6\0\10\24\1\72"+
-    "\4\24\1\73\5\24\14\0\1\24\6\0\10\24\1\74"+
-    "\6\24\1\75\3\24\17\0\1\76\47\0\1\77\40\0"+
-    "\1\24\6\0\4\24\1\100\16\24\14\0\1\24\6\0"+
-    "\7\24\1\101\13\24\14\0\1\24\6\0\3\24\1\102"+
-    "\17\24\14\0\1\24\6\0\20\24\1\103\2\24\14\0"+
-    "\1\24\6\0\4\24\1\104\16\24\14\0\1\24\6\0"+
-    "\17\24\1\105\3\24\14\0\1\24\6\0\21\24\1\106"+
-    "\1\24\14\0\1\24\6\0\4\24\1\107\16\24\14\0"+
-    "\1\24\6\0\21\24\1\110\1\24\14\0\1\24\6\0"+
-    "\15\24\1\111\5\24\14\0\1\24\6\0\1\24\1\112"+
-    "\21\24\14\0\1\24\6\0\5\24\1\113\15\24\14\0"+
-    "\1\24\6\0\11\24\1\114\11\24\14\0\1\24\6\0"+
-    "\11\24\1\115\11\24\14\0\1\24\6\0\11\24\1\116"+
-    "\11\24\14\0\1\24\6\0\11\24\1\117\1\120\10\24"+
-    "\14\0\1\24\6\0\5\24\1\121\15\24\14\0\1\24"+
-    "\6\0\5\24\1\122\15\24\14\0\1\24\6\0\7\24"+
-    "\1\123\13\24\14\0\1\24\6\0\4\24\1\124\16\24"+
-    "\14\0\1\24\6\0\14\24\1\125\6\24\14\0\1\24"+
-    "\6\0\12\24\1\126\10\24\14\0\1\24\6\0\21\24"+
-    "\1\127\1\24\14\0\1\24\6\0\14\24\1\130\6\24"+
-    "\14\0\1\24\6\0\13\24\1\131\7\24\14\0\1\24"+
-    "\6\0\1\24\1\132\21\24\14\0\1\24\6\0\7\24"+
-    "\1\133\13\24\14\0\1\24\6\0\17\24\1\134\3\24"+
-    "\14\0\1\24\6\0\5\24\1\135\15\24\14\0\1\24"+
-    "\6\0\5\24\1\136\15\24\14\0\1\24\6\0\1\24"+
-    "\1\137\21\24\14\0\1\24\6\0\17\24\1\140\3\24"+
-    "\14\0\1\24\6\0\5\24\1\141\15\24\14\0\1\24"+
-    "\6\0\1\24\1\142\21\24\14\0\1\24\6\0\12\24"+
-    "\1\143\10\24\14\0\1\24\6\0\5\24\1\144\15\24"+
-    "\14\0\1\24\6\0\17\24\1\145\3\24\14\0\1\24"+
-    "\6\0\13\24\1\146\7\24";
+    "\1\11\1\12\1\13\1\2\1\14\1\15\1\16\1\17"+
+    "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\24"+
+    "\1\27\1\30\1\31\2\24\1\32\1\24\1\33\1\34"+
+    "\1\35\1\36\1\37\1\24\1\40\1\41\47\0\3\42"+
+    "\1\43\43\42\4\44\1\45\42\44\13\0\1\46\1\0"+
+    "\1\15\6\0\23\47\21\0\1\50\45\0\1\51\1\52"+
+    "\1\53\45\0\1\54\1\55\41\0\1\24\6\0\23\24"+
+    "\15\0\1\24\6\0\14\24\1\56\6\24\15\0\1\24"+
+    "\6\0\5\24\1\57\15\24\15\0\1\24\6\0\5\24"+
+    "\1\60\7\24\1\61\5\24\15\0\1\24\6\0\12\24"+
+    "\1\62\1\24\1\63\6\24\15\0\1\24\6\0\15\24"+
+    "\1\64\5\24\15\0\1\24\6\0\6\24\1\65\5\24"+
+    "\1\66\6\24\15\0\1\24\6\0\15\24\1\67\5\24"+
+    "\15\0\1\24\6\0\15\24\1\70\5\24\15\0\1\24"+
+    "\6\0\17\24\1\71\3\24\15\0\1\24\6\0\17\24"+
+    "\1\72\3\24\15\0\1\24\6\0\5\24\1\73\15\24"+
+    "\15\0\1\24\6\0\10\24\1\74\4\24\1\75\5\24"+
+    "\15\0\1\24\6\0\10\24\1\76\6\24\1\77\3\24"+
+    "\15\0\1\100\46\0\1\101\6\0\23\47\20\0\1\102"+
+    "\50\0\1\103\41\0\1\24\6\0\4\24\1\104\16\24"+
+    "\15\0\1\24\6\0\7\24\1\105\13\24\15\0\1\24"+
+    "\6\0\3\24\1\106\17\24\15\0\1\24\6\0\20\24"+
+    "\1\107\2\24\15\0\1\24\6\0\4\24\1\110\16\24"+
+    "\15\0\1\24\6\0\17\24\1\111\3\24\15\0\1\24"+
+    "\6\0\21\24\1\112\1\24\15\0\1\24\6\0\4\24"+
+    "\1\113\16\24\15\0\1\24\6\0\21\24\1\114\1\24"+
+    "\15\0\1\24\6\0\15\24\1\115\5\24\15\0\1\24"+
+    "\6\0\1\24\1\116\21\24\15\0\1\24\6\0\5\24"+
+    "\1\117\15\24\15\0\1\24\6\0\11\24\1\120\11\24"+
+    "\15\0\1\24\6\0\11\24\1\121\11\24\15\0\1\24"+
+    "\6\0\11\24\1\122\11\24\15\0\1\24\6\0\11\24"+
+    "\1\123\1\124\10\24\15\0\1\24\6\0\5\24\1\125"+
+    "\15\24\15\0\1\24\6\0\5\24\1\126\15\24\15\0"+
+    "\1\24\6\0\7\24\1\127\13\24\15\0\1\24\6\0"+
+    "\4\24\1\130\16\24\15\0\1\24\6\0\14\24\1\131"+
+    "\6\24\15\0\1\24\6\0\12\24\1\132\10\24\15\0"+
+    "\1\24\6\0\21\24\1\133\1\24\15\0\1\24\6\0"+
+    "\14\24\1\134\6\24\15\0\1\24\6\0\13\24\1\135"+
+    "\7\24\15\0\1\24\6\0\1\24\1\136\21\24\15\0"+
+    "\1\24\6\0\7\24\1\137\13\24\15\0\1\24\6\0"+
+    "\17\24\1\140\3\24\15\0\1\24\6\0\5\24\1\141"+
+    "\15\24\15\0\1\24\6\0\5\24\1\142\15\24\15\0"+
+    "\1\24\6\0\1\24\1\143\21\24\15\0\1\24\6\0"+
+    "\17\24\1\144\3\24\15\0\1\24\6\0\5\24\1\145"+
+    "\15\24\15\0\1\24\6\0\1\24\1\146\21\24\15\0"+
+    "\1\24\6\0\12\24\1\147\10\24\15\0\1\24\6\0"+
+    "\5\24\1\150\15\24\15\0\1\24\6\0\17\24\1\151"+
+    "\3\24\15\0\1\24\6\0\13\24\1\152\7\24";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[2356];
+    int [] result = new int[2496];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -264,11 +267,11 @@ class AnalisadorLexico implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\2\11\2\1\7\11\2\1\1\11\1\1\1\11"+
-    "\1\1\1\11\16\1\1\0\1\11\1\0\1\1\1\11"+
-    "\1\1\3\11\23\1\2\11\47\1";
+    "\1\1\1\11\16\1\1\0\1\11\1\0\1\1\1\0"+
+    "\1\1\1\11\1\1\3\11\24\1\1\0\2\11\47\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[102];
+    int [] result = new int[106];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -346,10 +349,19 @@ class AnalisadorLexico implements java_cup.runtime.Scanner {
 
   /* user code: */
 
+
       private Symbol addToken(int tokenType,String value, String vaueType, int line, int column) {
         System.out.print(vaueType + yytext() + " linha:" + String.valueOf(line) + ", coluna:"+ String.valueOf(column) +" \n");
         return new Symbol(tokenType,line,column, value);
       }
+
+       private Symbol addToken(int tokenType,Integer value, String vaueType, int line, int column) {
+              return new Symbol(tokenType,line,column, value);
+           }
+
+       private Symbol addToken(int tokenType,Float value, String vaueType, int line, int column) {
+                     return new Symbol(tokenType,line,column, value);
+                  }
 
 
   /**
@@ -794,326 +806,342 @@ class AnalisadorLexico implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [120] { return addToken(TiposDeToken.EOF, yytext(), \"Caractere invalido!!!!\", yyline, yycolumn); }");
+            System.out.println("action [139] { return addToken(TiposDeToken.EOF, yytext(), \"Caractere invalido!!!!\", yyline, yycolumn); }");
             { return addToken(TiposDeToken.EOF, yytext(), "Caractere invalido!!!!", yyline, yycolumn);
             }
           // fall through
-          case 47: break;
+          case 49: break;
           case 2:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [74] {  }");
+            System.out.println("action [85] {  }");
             { 
             }
           // fall through
-          case 48: break;
+          case 50: break;
           case 3:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [107] { return addToken(TiposDeToken.LEFT_PARENTHESIS, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            System.out.println("action [118] { return addToken(TiposDeToken.LEFT_PARENTHESIS, yytext(),\"Operador \" ,yyline , yycolumn); }");
             { return addToken(TiposDeToken.LEFT_PARENTHESIS, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
-          case 49: break;
+          case 51: break;
           case 4:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [108] { return addToken(TiposDeToken.RIGHT_PARENTHESIS, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            System.out.println("action [119] { return addToken(TiposDeToken.RIGHT_PARENTHESIS, yytext(),\"Operador \" ,yyline , yycolumn); }");
             { return addToken(TiposDeToken.RIGHT_PARENTHESIS, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
-          case 50: break;
+          case 52: break;
           case 5:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [104] { return addToken(TiposDeToken.OPERADOR_MULT, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            System.out.println("action [115] { return addToken(TiposDeToken.OPERADOR_MULT, yytext(),\"Operador \" ,yyline , yycolumn); }");
             { return addToken(TiposDeToken.OPERADOR_MULT, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
-          case 51: break;
+          case 53: break;
           case 6:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [102] { return addToken(TiposDeToken.OPERADOR_ADD, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            System.out.println("action [113] { return addToken(TiposDeToken.OPERADOR_ADD, yytext(),\"Operador \" ,yyline , yycolumn); }");
             { return addToken(TiposDeToken.OPERADOR_ADD, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
-          case 52: break;
+          case 54: break;
           case 7:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [106] { return addToken(TiposDeToken.COMMA, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            System.out.println("action [117] { return addToken(TiposDeToken.COMMA, yytext(),\"Operador \" ,yyline , yycolumn); }");
             { return addToken(TiposDeToken.COMMA, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
-          case 53: break;
+          case 55: break;
           case 8:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [103] { return addToken(TiposDeToken.OPERADOR_MINUS, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            System.out.println("action [114] { return addToken(TiposDeToken.OPERADOR_MINUS, yytext(),\"Operador \" ,yyline , yycolumn); }");
             { return addToken(TiposDeToken.OPERADOR_MINUS, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
-          case 54: break;
+          case 56: break;
           case 9:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [105] { return addToken(TiposDeToken.OPERADOR_PART, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            System.out.println("action [116] { return addToken(TiposDeToken.OPERADOR_PART, yytext(),\"Operador \" ,yyline , yycolumn); }");
             { return addToken(TiposDeToken.OPERADOR_PART, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
-          case 55: break;
+          case 57: break;
           case 10:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [115] { return addToken(TiposDeToken.CONSTANT, yytext(),\"Constante \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.CONSTANT, yytext(),"Constante " ,yyline , yycolumn);
-            }
-          // fall through
-          case 56: break;
-          case 11:
-            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [118] { return addToken(TiposDeToken.COLON, yytext(),\"Dois pontos \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.COLON, yytext(),"Dois pontos " ,yyline , yycolumn);
-            }
-          // fall through
-          case 57: break;
-          case 12:
-            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [113] { return addToken(TiposDeToken.SEMICOLON, yytext(),\"Ponto e vírgula\", yyline, yycolumn); }");
-            { return addToken(TiposDeToken.SEMICOLON, yytext(),"Ponto e vírgula", yyline, yycolumn);
+            System.out.println("action [126] { int aux = Integer.parseInt(yytext());"+ZZ_NL+"    return addToken(TiposDeToken.CONSTANT, new Integer(aux),\"Constante \" ,yyline , yycolumn); }");
+            { int aux = Integer.parseInt(yytext());
+    return addToken(TiposDeToken.CONSTANT, new Integer(aux),"Constante " ,yyline , yycolumn);
             }
           // fall through
           case 58: break;
-          case 13:
+          case 11:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [95] { return addToken(TiposDeToken.OPERADOR_LESS, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_LESS, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [136] { return addToken(TiposDeToken.COLON, yytext(),\"Dois pontos \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.COLON, yytext(),"Dois pontos " ,yyline , yycolumn);
             }
           // fall through
           case 59: break;
-          case 14:
+          case 12:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [97] { return addToken(TiposDeToken.OPERADOR_EQUAL, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_EQUAL, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [124] { return addToken(TiposDeToken.SEMICOLON, yytext(),\"Ponto e vírgula\", yyline, yycolumn); }");
+            { return addToken(TiposDeToken.SEMICOLON, yytext(),"Ponto e vírgula", yyline, yycolumn);
             }
           // fall through
           case 60: break;
-          case 15:
+          case 13:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [96] { return addToken(TiposDeToken.OPERADOR_GREAT, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_GREAT, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [106] { return addToken(TiposDeToken.OPERADOR_LESS, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_LESS, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 61: break;
-          case 16:
+          case 14:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [117] { return addToken(TiposDeToken.INTERROGATION, yytext(),\"Interrogação \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.INTERROGATION, yytext(),"Interrogação " ,yyline , yycolumn);
+            System.out.println("action [108] { return addToken(TiposDeToken.OPERADOR_EQUAL, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_EQUAL, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 62: break;
-          case 17:
+          case 15:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [114] { return addToken(TiposDeToken.IDENTIFICADOR, yytext(),\"Identificador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.IDENTIFICADOR, yytext(),"Identificador " ,yyline , yycolumn);
+            System.out.println("action [107] { return addToken(TiposDeToken.OPERADOR_GREAT, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_GREAT, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 63: break;
-          case 18:
+          case 16:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [116] { return addToken(TiposDeToken.LITERAL, yytext(),\"Literal \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.LITERAL, yytext(),"Literal " ,yyline , yycolumn);
+            System.out.println("action [135] { return addToken(TiposDeToken.INTERROGATION, yytext(),\"Interrogação \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.INTERROGATION, yytext(),"Interrogação " ,yyline , yycolumn);
             }
           // fall through
           case 64: break;
-          case 19:
+          case 17:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [75] { System.out.print(\"Comentário \"+ yytext() + \"\\n\"); }");
-            { System.out.print("Comentário "+ yytext() + "\n");
+            System.out.println("action [125] { return addToken(TiposDeToken.IDENTIFICADOR, yytext(),\"Identificador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.IDENTIFICADOR, yytext(),"Identificador " ,yyline , yycolumn);
             }
           // fall through
           case 65: break;
-          case 20:
+          case 18:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [101] { return addToken(TiposDeToken.OPERADOR_ASSIGN, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_ASSIGN, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [134] { return addToken(TiposDeToken.LITERAL, yytext(),\"Literal \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.LITERAL, yytext(),"Literal " ,yyline , yycolumn);
             }
           // fall through
           case 66: break;
-          case 21:
+          case 19:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [110] { return addToken(TiposDeToken.OPERADOR_LEFT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_LEFT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [86] { System.out.print(\"Comentário \"+ yytext() + \"\\n\"); }");
+            { System.out.print("Comentário "+ yytext() + "\n");
             }
           // fall through
           case 67: break;
-          case 22:
+          case 20:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [99] { return addToken(TiposDeToken.OPERADOR_LESSEQUAL, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_LESSEQUAL, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [138] { return addToken(TiposDeToken.EOF, yytext(),\"Identificador inválido !!!\" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.EOF, yytext(),"Identificador inválido !!!" ,yyline , yycolumn);
             }
           // fall through
           case 68: break;
-          case 23:
+          case 21:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [98] { return addToken(TiposDeToken.OPERADOR_DIFFERENT, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_DIFFERENT, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [112] { return addToken(TiposDeToken.OPERADOR_ASSIGN, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_ASSIGN, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 69: break;
-          case 24:
+          case 22:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [100] { return addToken(TiposDeToken.OPERADOR_GREATEQUAL, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_GREATEQUAL, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [121] { return addToken(TiposDeToken.OPERADOR_LEFT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_LEFT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 70: break;
-          case 25:
+          case 23:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [109] { return addToken(TiposDeToken.OPERADOR_RIGHT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_RIGHT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [110] { return addToken(TiposDeToken.OPERADOR_LESSEQUAL, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_LESSEQUAL, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 71: break;
-          case 26:
+          case 24:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [87] { return addToken(TiposDeToken.PALAVRA_RESERVADA_DO, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_DO, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [109] { return addToken(TiposDeToken.OPERADOR_DIFFERENT, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_DIFFERENT, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 72: break;
-          case 27:
+          case 25:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [84] { return addToken(TiposDeToken.PALAVRA_RESERVADA_IF, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_IF, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [111] { return addToken(TiposDeToken.OPERADOR_GREATEQUAL, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_GREATEQUAL, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 73: break;
-          case 28:
+          case 26:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [94] { return addToken(TiposDeToken.PALAVRA_RESERVADA_OR, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_OR, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [120] { return addToken(TiposDeToken.OPERADOR_RIGHT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_RIGHT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 74: break;
-          case 29:
+          case 27:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [90] { return addToken(TiposDeToken.PALAVRA_RESERVADA_TO, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_TO, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [98] { return addToken(TiposDeToken.PALAVRA_RESERVADA_DO, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_DO, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 75: break;
-          case 30:
+          case 28:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [111] { return addToken(TiposDeToken.OPERADOR_UNSIGNED_LEFT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_UNSIGNED_LEFT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [95] { return addToken(TiposDeToken.PALAVRA_RESERVADA_IF, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_IF, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 76: break;
-          case 31:
+          case 29:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [112] { return addToken(TiposDeToken.OPERADOR_UNSIGNED_RIGHT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.OPERADOR_UNSIGNED_RIGHT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
+            System.out.println("action [105] { return addToken(TiposDeToken.PALAVRA_RESERVADA_OR, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_OR, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 77: break;
-          case 32:
+          case 30:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [93] { return addToken(TiposDeToken.PALAVRA_RESERVADA_AND, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_AND, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [101] { return addToken(TiposDeToken.PALAVRA_RESERVADA_TO, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_TO, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 78: break;
-          case 33:
+          case 31:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [81] { return addToken(TiposDeToken.PALAVRA_RESERVADA_END, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_END, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [130] { float aux = Float.parseFloat(yytext());"+ZZ_NL+"    return addToken(TiposDeToken.FLOAT_CONSTANT, new Float(aux),\"Constante float \" ,yyline , yycolumn); }");
+            { float aux = Float.parseFloat(yytext());
+    return addToken(TiposDeToken.FLOAT_CONSTANT, new Float(aux),"Constante float " ,yyline , yycolumn);
             }
           // fall through
           case 79: break;
-          case 34:
+          case 32:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [89] { return addToken(TiposDeToken.PALAVRA_RESERVADA_FOR, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_FOR, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [122] { return addToken(TiposDeToken.OPERADOR_UNSIGNED_LEFT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_UNSIGNED_LEFT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 80: break;
-          case 35:
+          case 33:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [92] { return addToken(TiposDeToken.PALAVRA_RESERVADA_MOD, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_MOD, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [123] { return addToken(TiposDeToken.OPERADOR_UNSIGNED_RIGHT_SHIFT, yytext(),\"Operador \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.OPERADOR_UNSIGNED_RIGHT_SHIFT, yytext(),"Operador " ,yyline , yycolumn);
             }
           // fall through
           case 81: break;
-          case 36:
+          case 34:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [91] { return addToken(TiposDeToken.PALAVRA_RESERVADA_NOT, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_NOT, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [104] { return addToken(TiposDeToken.PALAVRA_RESERVADA_AND, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_AND, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 82: break;
-          case 37:
+          case 35:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [86] { return addToken(TiposDeToken.PALAVRA_RESERVADA_ELSE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_ELSE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [92] { return addToken(TiposDeToken.PALAVRA_RESERVADA_END, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_END, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 83: break;
-          case 38:
+          case 36:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [78] { return addToken(TiposDeToken.PALAVRA_RESERVADA_READ, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_READ, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [100] { return addToken(TiposDeToken.PALAVRA_RESERVADA_FOR, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_FOR, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 84: break;
-          case 39:
+          case 37:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [85] { return addToken(TiposDeToken.PALAVRA_RESERVADA_THEN, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_THEN, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [103] { return addToken(TiposDeToken.PALAVRA_RESERVADA_MOD, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_MOD, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 85: break;
-          case 40:
+          case 38:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [80] { return addToken(TiposDeToken.PALAVRA_RESERVADA_BEGIN, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_BEGIN, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [102] { return addToken(TiposDeToken.PALAVRA_RESERVADA_NOT, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_NOT, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 86: break;
-          case 41:
+          case 39:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [88] { return addToken(TiposDeToken.PALAVRA_RESERVADA_WHILE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_WHILE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [97] { return addToken(TiposDeToken.PALAVRA_RESERVADA_ELSE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_ELSE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 87: break;
-          case 42:
+          case 40:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [79] { return addToken(TiposDeToken.PALAVRA_RESERVADA_WRITE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_WRITE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [89] { return addToken(TiposDeToken.PALAVRA_RESERVADA_READ, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_READ, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 88: break;
-          case 43:
+          case 41:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [83] { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECIMAL, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECIMAL, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [96] { return addToken(TiposDeToken.PALAVRA_RESERVADA_THEN, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_THEN, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 89: break;
-          case 44:
+          case 42:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [77] { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECLARE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECLARE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [91] { return addToken(TiposDeToken.PALAVRA_RESERVADA_BEGIN, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_BEGIN, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 90: break;
-          case 45:
+          case 43:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [82] { return addToken(TiposDeToken.PALAVRA_RESERVADA_INTEGER, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_INTEGER, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [99] { return addToken(TiposDeToken.PALAVRA_RESERVADA_WHILE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_WHILE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 91: break;
-          case 46:
+          case 44:
             System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
-            System.out.println("action [76] { return addToken(TiposDeToken.PALAVRA_RESERVADA_PROGRAM, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
-            { return addToken(TiposDeToken.PALAVRA_RESERVADA_PROGRAM, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            System.out.println("action [90] { return addToken(TiposDeToken.PALAVRA_RESERVADA_WRITE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_WRITE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
             }
           // fall through
           case 92: break;
+          case 45:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [94] { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECIMAL, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECIMAL, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            }
+          // fall through
+          case 93: break;
+          case 46:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [88] { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECLARE, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_DECLARE, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            }
+          // fall through
+          case 94: break;
+          case 47:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [93] { return addToken(TiposDeToken.PALAVRA_RESERVADA_INTEGER, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_INTEGER, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            }
+          // fall through
+          case 95: break;
+          case 48:
+            System.out.println("line: "+(yyline+1)+" "+"col: "+(yycolumn+1)+" "+"match: --"+zzToPrintable(yytext())+"--");
+            System.out.println("action [87] { return addToken(TiposDeToken.PALAVRA_RESERVADA_PROGRAM, yytext(),\"Palavra Reservada \" ,yyline , yycolumn); }");
+            { return addToken(TiposDeToken.PALAVRA_RESERVADA_PROGRAM, yytext(),"Palavra Reservada " ,yyline , yycolumn);
+            }
+          // fall through
+          case 96: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

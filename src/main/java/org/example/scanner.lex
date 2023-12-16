@@ -12,14 +12,19 @@ import java_cup.runtime.Symbol;
 
 %{
 
+
       private Symbol addToken(int tokenType,String value, String vaueType, int line, int column) {
-        //System.out.print(vaueType + yytext() + " linha:" + String.valueOf(line) + ", coluna:"+ String.valueOf(column) +" \n");
+        System.out.print(vaueType + yytext() + " linha:" + String.valueOf(line) + ", coluna:"+ String.valueOf(column) +" \n");
         return new Symbol(tokenType,line,column, value);
       }
 
        private Symbol addToken(int tokenType,Integer value, String vaueType, int line, int column) {
               return new Symbol(tokenType,line,column, value);
            }
+
+       private Symbol addToken(int tokenType,Float value, String vaueType, int line, int column) {
+                     return new Symbol(tokenType,line,column, value);
+                  }
 %}
 
 letter = [A-Za-z]
@@ -27,6 +32,8 @@ digit = [0-9]
 space = [ \t\n\r\f]
 identifier = {letter}({letter}|{digit})*
 constant = {digit}({digit})*
+optionalFractional = ("."{constant})?
+floatConstant = {constant}{optionalFractional}
 comment = "%"[^]*"%"
 program = "program"
 declare = "declare"
@@ -71,7 +78,7 @@ unsignedLeftShift = "<<<"
 interrogation = "?"
 colon = ":"
 
-
+invalidIdentifier = {digit}({letter}|{digit})*{letter}
 
 %%
 
@@ -120,8 +127,13 @@ colon = ":"
     int aux = Integer.parseInt(yytext());
     return addToken(TiposDeToken.CONSTANT, new Integer(aux),"Constante " ,yyline , yycolumn);
 }
+{floatConstant} {
+    float aux = Float.parseFloat(yytext());
+    return addToken(TiposDeToken.FLOAT_CONSTANT, new Float(aux),"Constante float " ,yyline , yycolumn);
+}
 {literal} {return addToken(TiposDeToken.LITERAL, yytext(),"Literal " ,yyline , yycolumn);}
 {interrogation} {return addToken(TiposDeToken.INTERROGATION, yytext(),"Interrogação " ,yyline , yycolumn);}
 {colon} {return addToken(TiposDeToken.COLON, yytext(),"Dois pontos " ,yyline , yycolumn);}
 
+  {invalidIdentifier} {return addToken(TiposDeToken.EOF, yytext(),"Identificador inválido !!!" ,yyline , yycolumn);}
 . { return addToken(TiposDeToken.EOF, yytext(), "Caractere invalido!!!!", yyline, yycolumn); }

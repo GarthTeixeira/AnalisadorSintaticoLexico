@@ -16,6 +16,7 @@ PALAVRA_RESERVADA_OR, OPERADOR_MULT, OPERADOR_PART, PALAVRA_RESERVADA_MOD, PALAV
 OPERADOR_RIGHT_SHIFT, OPERADOR_UNSIGNED_RIGHT_SHIFT, OPERADOR_UNSIGNED_LEFT_SHIFT, PALAVRA_RESERVADA_NOT,COMMA, INTERROGATION;
 
 terminal Integer CONSTANT;
+terminal Float FLOAT_CONSTANT;
 
 non terminal program, body, decl_list, decl, ident_list, type, stmt_list, stmt, assign_stmt, if_stmt, condition,
 do_while_stmt, stmt_suffix, for_stmt, while_stmt, read_stmt, write_stmt, writable, expression, simple_expr, term,

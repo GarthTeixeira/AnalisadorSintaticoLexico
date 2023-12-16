@@ -44,6 +44,7 @@ public interface TiposDeToken {
   public static final int OPERADOR_DIFFERENT = 29;
   public static final int OPERADOR_LEFT_SHIFT = 37;
   public static final int PALAVRA_RESERVADA_DECIMAL = 8;
+  public static final int FLOAT_CONSTANT = 45;
   public static final int PALAVRA_RESERVADA_PROGRAM = 2;
   public static final int OPERADOR_MINUS = 31;
   public static final int OPERADOR_PART = 34;
@@ -98,7 +99,8 @@ public interface TiposDeToken {
   "PALAVRA_RESERVADA_NOT",
   "COMMA",
   "INTERROGATION",
-  "CONSTANT"
+  "CONSTANT",
+  "FLOAT_CONSTANT"
   };
 }
 
