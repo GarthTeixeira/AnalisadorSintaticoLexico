@@ -41,7 +41,7 @@ stmt ::= assign_stmt | if_stmt | while_stmt | do_while_stmt| for_stmt | read_stm
 
 assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
                     if (smpl_ex instanceof String)
-                        System.out.println("Erro: Atribuicao de string a variavel inteira");
+                        System.out.println("Erro: Strign nao pode ser atribuida a variavel");
                     else
                         symT.put(id.toString(), (Integer)smpl_ex);
 :};
@@ -49,7 +49,8 @@ assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
 if_stmt ::= PALAVRA_RESERVADA_IF condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_END | PALAVRA_RESERVADA_IF
 condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_ELSE stmt_list PALAVRA_RESERVADA_END;
 
-condition ::= expression;
+condition ::= expression:exp {:if ( exp instanceof Boolean) RESULT = exp;
+                                else System.out.println("Erro: Expressao nao booleana");:};
 
 do_while_stmt ::= PALAVRA_RESERVADA_DO stmt_list stmt_suffix;
 
@@ -107,13 +108,14 @@ term ::= factor_a:f_a
              |
              term:t mulop:mulop factor_a:f_a
              {:
-                if (mulop.equals("*"))
+                if (mulop.equals("*")){
                     RESULT = ((Integer)t).intValue() * ((Integer)f_a).intValue();
-                else if (mulop.equals("/"))
+                }else if (mulop.equals("/")){
+                    if (((Integer)f_a).intValue() == 0) System.out.println("Erro: Divisao por zero");
                     RESULT = ((Integer)t).intValue() / ((Integer)f_a).intValue();
-                else if (mulop.equals("%"))
+                }else if (mulop.equals("%")){
                     RESULT = ((Integer)t).intValue() % ((Integer)f_a).intValue();
-                else if (mulop.equals("and"))
+                }else if (mulop.equals("and"))
                     RESULT = ((Boolean)t).booleanValue() && ((Boolean)f_a).booleanValue();
              :};
 
