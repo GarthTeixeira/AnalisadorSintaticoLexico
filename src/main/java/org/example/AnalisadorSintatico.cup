@@ -13,6 +13,13 @@ parser code {:
   public boolean isNumber(Object o) {
     return o instanceof Integer || o instanceof Float;
   }
+
+  public void defineErro(int linha, int coluna, String texto)
+  {
+              AnalisadorLexico sc = (AnalisadorLexico) this.getScanner();
+              sc.defineErro(linha, coluna, texto);
+  }
+
 :}
 
 terminal PALAVRA_RESERVADA_PROGRAM, IDENTIFICADOR, PALAVRA_RESERVADA_DECLARE, PALAVRA_RESERVADA_BEGIN, PALAVRA_RESERVADA_END,
@@ -129,7 +136,7 @@ expression ::= simple_expr:smpl_ex
                     if (exp instanceof Boolean)
                         RESULT = ((Boolean)exp).booleanValue() ? smpl_ax_a : smpl_ax_b;
                     else
-                        System.out.println("Erro: Expressao nao booleana");
+                        parser.defineErro(expleft,expright,"Erro: Expressao nao booleana");
                :};
 
 simple_expr ::= term:t
@@ -141,9 +148,9 @@ simple_expr ::= term:t
                         if (t instanceof Boolean && smpl_ex instanceof Boolean)
                             RESULT = ((Boolean)t).booleanValue() || ((Boolean)smpl_ex).booleanValue();
                         else
-                            System.out.println("Erro: Operador logico aplicado a um valor nao booleano");
+                            parser.defineErro(smpl_exleft,smpl_exright,"Erro: Operador logico aplicado a um valor nao booleano");
                     } else if(!isNumber(smpl_ex) || !isNumber(t)){
-                            System.out.println("Erro: Operador aritmetico aplicado a um valor nao numerico");
+                            parser.defineErro(smpl_exleft,smpl_exright,"Erro: Operador aritmetico aplicado a um valor nao numerico");
                      } else{
                          if (t instanceof Float){
                             if (addop.equals("+"))
@@ -168,11 +175,11 @@ term ::= factor_a:f_a
                     if (t instanceof Boolean && f_a instanceof Boolean)
                         RESULT = ((Boolean)t).booleanValue() && ((Boolean)f_a).booleanValue();
                     else
-                        System.out.println("Erro: Operador logico aplicado a um valor nao booleano");
+                        parser.defineErro(tleft,tright,"Erro: Operador logico aplicado a um valor nao booleano");
                 } else if(!isNumber(t) || !isNumber(f_a)){
-                    System.out.println("Erro: Operador aritmetico aplicado a um valor nao numerico");
+                    parser.defineErro(tleft,tright,"Erro: Operador aritmetico aplicado a um valor nao numerico");
                 } else if (  (mulop.equals("/")) && ((Integer)f_a).intValue() == 0){
-                    System.out.println("Erro: Divisao por zero");
+                    parser.defineErro(tleft,tright,"Erro: Divisao por zero");
                 }else if ((t instanceof Float)){
                     if (mulop.equals("*"))
                         RESULT = ((Float)t).floatValue() * ((Float)f_a).floatValue();
@@ -197,7 +204,7 @@ factor_a ::= factor:f
              {: if (f instanceof Boolean)
                     RESULT = !((Boolean)f).booleanValue();
                 else
-                    System.out.println("Erro: Operador not aplicado a um valor nao booleano");
+                    parser.defineErro(fleft,fright,"Erro: Operador not aplicado a um valor nao booleano");
              :}
              |
              OPERADOR_MINUS factor:f
@@ -206,7 +213,7 @@ factor_a ::= factor:f
                 else if (f instanceof Float)
                     RESULT = -((Float)f).floatValue();
                 else
-                    System.out.println("Erro: Operador unario aplicado a um valor nao numerico");
+                    parser.defineErro(fleft,fright,"Erro: Operador unario aplicado a um valor nao numerico");
               :};
 
 factor ::=  IDENTIFICADOR:id
@@ -214,7 +221,7 @@ factor ::=  IDENTIFICADOR:id
                 if (symT.containsKey(id.toString()))
                     RESULT = symT.get(id.toString());
                 else
-                    System.out.println("Erro: Variavel nao declarada");
+                    parser.defineErro(idleft,idright,"Erro: Variavel nao declarada");
             :}
             |
             CONSTANT:c

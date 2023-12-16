@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -9,13 +10,12 @@ import java.util.Scanner;
 
 public class Main {
 
-    static String FILE_NAME = "teste2.txt";
+    static String FILE_NAME = "teste8.txt";
 
     static String [] allFilesNames = {"teste1.txt", "teste2.txt", "teste3.txt", "teste4.txt", "teste5.txt", "teste6.txt", "teste7.txt", "teste8.txt", "teste9.txt"};
 
     public static String readFileReturnString(String fileName) throws IOException {
         try (InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(fileName)){
-
 
             Scanner scanner = new Scanner(inputStream);
 
@@ -44,11 +44,18 @@ public class Main {
         String teste = getTesteContent(args);
 
         try {
-            AnalisadorLexico lexical = new AnalisadorLexico(new StringReader(teste));
+            ListaErros listaErros = new ListaErros();
+
+            AnalisadorLexico lexical = new AnalisadorLexico(new StringReader(teste), listaErros);
             Parser parser = new Parser(lexical);
 
-            Object result = parser.parse().value;
-
+            parser.parse();
+            if (!listaErros.hasErros()) {
+                System.out.println("Sintaxe Correta");
+            } else {
+                System.out.println("Erros encontrados:");
+                listaErros.dump();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

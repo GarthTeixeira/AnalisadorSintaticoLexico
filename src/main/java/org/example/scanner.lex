@@ -6,11 +6,26 @@ import java_cup.runtime.Symbol;
 %class AnalisadorLexico
 %cupsym TiposDeToken
 %cup
-%debug
 %line
 %column
 
 %{
+
+
+      private ListaErros listaErros;
+
+      public AnalisadorLexico(java.io.StringReader in, ListaErros listaErros) {
+          this(in);
+          this.listaErros = listaErros;
+      }
+
+      public ListaErros getListaErros() {
+        return listaErros;
+      }
+
+      public void defineErro(int linha, int coluna, String texto) {
+      		listaErros.defineErro(linha, coluna, texto);
+      }
 
 
       private Symbol addToken(int tokenType,String value, String vaueType, int line, int column) {
