@@ -1,10 +1,18 @@
 package org.example ;
 
 import java_cup.runtime.*;
-import java.util.HashMap;
+import java.util.*;
 
 parser code {:
-  private HashMap<String,Integer> symT = new HashMap<String,Integer>();
+  private HashMap<String,Object> symT = new HashMap<String,Object>();
+
+  public boolean isDeclared(String id) {
+    return symT.containsKey(id);
+  }
+
+  public boolean isNumber(Object o) {
+    return o instanceof Integer || o instanceof Float;
+  }
 :}
 
 terminal PALAVRA_RESERVADA_PROGRAM, IDENTIFICADOR, PALAVRA_RESERVADA_DECLARE, PALAVRA_RESERVADA_BEGIN, PALAVRA_RESERVADA_END,
@@ -18,9 +26,11 @@ OPERADOR_RIGHT_SHIFT, OPERADOR_UNSIGNED_RIGHT_SHIFT, OPERADOR_UNSIGNED_LEFT_SHIF
 terminal Integer CONSTANT;
 terminal Float FLOAT_CONSTANT;
 
-non terminal program, body, decl_list, decl, ident_list, type, stmt_list, stmt, assign_stmt, if_stmt, condition,
+non terminal program, body, decl_list, decl, type, stmt_list, stmt, assign_stmt, if_stmt, condition,
 do_while_stmt, stmt_suffix, for_stmt, while_stmt, read_stmt, write_stmt, writable, expression, simple_expr, term,
 factor_a, factor, relop, addop, mulop, shiftop;
+
+non terminal List<String> ident_list;
 
 start with program;
 
@@ -30,21 +40,49 @@ body ::= PALAVRA_RESERVADA_DECLARE decl_list PALAVRA_RESERVADA_BEGIN stmt_list P
 
 decl_list ::= decl SEMICOLON | decl_list decl SEMICOLON ;
 
-decl ::= type ident_list;
+decl ::= type:type ident_list:id_list
+    {:
 
-ident_list ::= IDENTIFICADOR | IDENTIFICADOR COMMA ident_list;
+        for (String id : id_list)
+            if (isDeclared(id))
+                System.out.println("Erro: Variavel ja declarada");
+            else
+                if (type.equals("integer"))
+                    symT.put(id, new Integer(0));
+                else
+                    symT.put(id, new Float(0));
+    :};
 
-type ::= PALAVRA_RESERVADA_INTEGER | PALAVRA_RESERVADA_DECIMAL;
+ident_list ::= IDENTIFICADOR:id {: RESULT = new ArrayList<String>() {{add(id.toString());}};:} | IDENTIFICADOR:id COMMA ident_list:id_list
+    {:
+        List<String> aux = new ArrayList<String>();
+        aux.addAll(id_list);
+        aux.add(id.toString());
+        RESULT = aux;
+    :};
+
+type ::= PALAVRA_RESERVADA_INTEGER:int_word{:RESULT = int_word;:} |
+PALAVRA_RESERVADA_DECIMAL:float_word{:RESULT = float_word;:};
 
 stmt_list ::= stmt SEMICOLON | stmt_list stmt SEMICOLON ;
 
 stmt ::= assign_stmt | if_stmt | while_stmt | do_while_stmt| for_stmt | read_stmt | write_stmt;
 
 assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
-                    if (smpl_ex instanceof String)
-                        System.out.println("Erro: Strign nao pode ser atribuida a variavel");
-                    else
-                        symT.put(id.toString(), (Integer)smpl_ex);
+                    if (!isNumber(smpl_ex))
+                        System.out.println("Erro: Expressao nao numerica");
+                    else if (smpl_ex instanceof Float){
+                        if (symT.get(id.toString()) instanceof Integer)
+                            System.out.println("Erro: Atribuicao de decimal a inteiro");
+                        else
+                            symT.put(id.toString(), (Float)smpl_ex);
+                    }
+                    else{
+                        if (symT.get(id.toString()) instanceof Float)
+                            System.out.println("Erro: Atribuicao de inteiro a decimal");
+                        else
+                            symT.put(id.toString(), (Integer)smpl_ex);
+                    }
 :};
 
 if_stmt ::= PALAVRA_RESERVADA_IF condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_END | PALAVRA_RESERVADA_IF
@@ -88,7 +126,10 @@ expression ::= simple_expr:smpl_ex
                :}
                | LEFT_PARENTHESIS expression:exp RIGHT_PARENTHESIS INTERROGATION simple_expr:smpl_ax_a COLON simple_expr:smpl_ax_b
                {:
-                    RESULT = ((Boolean)exp).booleanValue() ? smpl_ax_a : smpl_ax_b;
+                    if (exp instanceof Boolean)
+                        RESULT = ((Boolean)exp).booleanValue() ? smpl_ax_a : smpl_ax_b;
+                    else
+                        System.out.println("Erro: Expressao nao booleana");
                :};
 
 simple_expr ::= term:t
@@ -96,12 +137,26 @@ simple_expr ::= term:t
                 |
                 simple_expr:smpl_ex addop:addop term:t
                 {:
-                    if (addop.equals("+"))
-                        RESULT = ((Integer)smpl_ex).intValue() + ((Integer)t).intValue();
-                    else if (addop.equals("-"))
-                        RESULT = ((Integer)smpl_ex).intValue() - ((Integer)t).intValue();
-                    else if (addop.equals("or"))
-                        RESULT = ((Boolean)smpl_ex).booleanValue() || ((Boolean)t).booleanValue();
+                    if (addop.equals("or")){
+                        if (t instanceof Boolean && smpl_ex instanceof Boolean)
+                            RESULT = ((Boolean)t).booleanValue() || ((Boolean)smpl_ex).booleanValue();
+                        else
+                            System.out.println("Erro: Operador logico aplicado a um valor nao booleano");
+                    } else if(!isNumber(smpl_ex) || !isNumber(t)){
+                            System.out.println("Erro: Operador aritmetico aplicado a um valor nao numerico");
+                     } else{
+                         if (t instanceof Float){
+                            if (addop.equals("+"))
+                                RESULT = ((Float)smpl_ex).floatValue() + ((Float)t).floatValue();
+                            else if (addop.equals("-"))
+                                RESULT = ((Float)smpl_ex).floatValue() - ((Float)t).floatValue();
+                         }else {
+                            if (addop.equals("+"))
+                                RESULT = ((Integer)smpl_ex).intValue() + ((Integer)t).intValue();
+                            else if (addop.equals("-"))
+                                RESULT = ((Integer)smpl_ex).intValue() - ((Integer)t).intValue();
+                         }
+                     }
                 :};
 
 term ::= factor_a:f_a
@@ -109,15 +164,30 @@ term ::= factor_a:f_a
              |
              term:t mulop:mulop factor_a:f_a
              {:
-                if (mulop.equals("*")){
-                    RESULT = ((Integer)t).intValue() * ((Integer)f_a).intValue();
-                }else if (mulop.equals("/")){
-                    if (((Integer)f_a).intValue() == 0) System.out.println("Erro: Divisao por zero");
-                    RESULT = ((Integer)t).intValue() / ((Integer)f_a).intValue();
-                }else if (mulop.equals("%")){
-                    RESULT = ((Integer)t).intValue() % ((Integer)f_a).intValue();
-                }else if (mulop.equals("and"))
-                    RESULT = ((Boolean)t).booleanValue() && ((Boolean)f_a).booleanValue();
+                if (mulop.equals("and")){
+                    if (t instanceof Boolean && f_a instanceof Boolean)
+                        RESULT = ((Boolean)t).booleanValue() && ((Boolean)f_a).booleanValue();
+                    else
+                        System.out.println("Erro: Operador logico aplicado a um valor nao booleano");
+                } else if(!isNumber(t) || !isNumber(f_a)){
+                    System.out.println("Erro: Operador aritmetico aplicado a um valor nao numerico");
+                } else if (  (mulop.equals("/")) && ((Integer)f_a).intValue() == 0){
+                    System.out.println("Erro: Divisao por zero");
+                }else if ((t instanceof Float)){
+                    if (mulop.equals("*"))
+                        RESULT = ((Float)t).floatValue() * ((Float)f_a).floatValue();
+                    else if (mulop.equals("/"))
+                        RESULT = ((Float)t).floatValue() / ((Float)f_a).floatValue();
+                    else if (mulop.equals("%"))
+                        RESULT = ((Float)t).floatValue() % ((Float)f_a).floatValue();
+                } else {
+                    if (mulop.equals("*"))
+                        RESULT = ((Integer)t).intValue() * ((Integer)f_a).intValue();
+                    else if (mulop.equals("/"))
+                        RESULT = ((Integer)t).intValue() / ((Integer)f_a).intValue();
+                    else if (mulop.equals("%"))
+                        RESULT = ((Integer)t).intValue() % ((Integer)f_a).intValue();
+                }
              :};
 
 factor_a ::= factor:f
@@ -125,12 +195,18 @@ factor_a ::= factor:f
              |
              PALAVRA_RESERVADA_NOT factor:f
              {: if (f instanceof Boolean)
-                RESULT = !((Boolean)f).booleanValue();
+                    RESULT = !((Boolean)f).booleanValue();
+                else
+                    System.out.println("Erro: Operador not aplicado a um valor nao booleano");
              :}
              |
              OPERADOR_MINUS factor:f
              {: if ( f instanceof Integer)
-                RESULT = -((Integer)f).intValue();
+                    RESULT = -((Integer)f).intValue();
+                else if (f instanceof Float)
+                    RESULT = -((Float)f).floatValue();
+                else
+                    System.out.println("Erro: Operador unario aplicado a um valor nao numerico");
               :};
 
 factor ::=  IDENTIFICADOR:id
@@ -143,7 +219,11 @@ factor ::=  IDENTIFICADOR:id
             |
             CONSTANT:c
             {:RESULT = c;:}
-            | LEFT_PARENTHESIS expression:e RIGHT_PARENTHESIS
+            |
+            FLOAT_CONSTANT:fc
+            {:RESULT = fc;:}
+            |
+            LEFT_PARENTHESIS expression:e RIGHT_PARENTHESIS
             {:RESULT = e;:};
 
 relop ::= OPERADOR_EQUAL:op_equal{:RESULT = op_equal;:} | OPERADOR_GREAT:op_greater{:RESULT = op_greater;:} |
