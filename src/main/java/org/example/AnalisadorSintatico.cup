@@ -14,10 +14,24 @@ parser code {:
     return o instanceof Integer || o instanceof Float;
   }
 
+  public void syntax_error(Symbol s){
+          this.defineErro(s.left, s.right);
+  	}
+
   public void defineErro(int linha, int coluna, String texto)
   {
               AnalisadorLexico sc = (AnalisadorLexico) this.getScanner();
               sc.defineErro(linha, coluna, texto);
+  }
+
+  public void defineErro(int linha, int coluna){
+          AnalisadorLexico sc = (AnalisadorLexico) this.getScanner();
+          sc.defineErro(linha, coluna);
+  }
+
+  public void defineErro(String texto){
+          AnalisadorLexico sc = (AnalisadorLexico) this.getScanner();
+          sc.defineErro(texto);
   }
 
 :}
@@ -43,16 +57,20 @@ start with program;
 
 program ::= PALAVRA_RESERVADA_PROGRAM IDENTIFICADOR body;
 
-body ::= PALAVRA_RESERVADA_DECLARE decl_list PALAVRA_RESERVADA_BEGIN stmt_list PALAVRA_RESERVADA_END;
+body ::= PALAVRA_RESERVADA_DECLARE decl_list PALAVRA_RESERVADA_BEGIN stmt_list PALAVRA_RESERVADA_END | error {:
+                parser.defineErro("Erro sintático: Corpo do programa invalido");
+            :};
 
-decl_list ::= decl SEMICOLON | decl_list decl SEMICOLON ;
+decl_list ::= decl SEMICOLON | decl_list decl SEMICOLON | error {:
+                parser.defineErro("Erro sintático: Declaracao invalida");
+            :};
 
 decl ::= type:type ident_list:id_list
     {:
 
         for (String id : id_list)
             if (isDeclared(id))
-                System.out.println("Erro: Variavel ja declarada");
+                parser.defineErro( id_listleft,id_listright ,"Erro: Variavel ja declarada");
             else
                 if (type.equals("integer"))
                     symT.put(id, new Integer(0));
@@ -69,24 +87,28 @@ ident_list ::= IDENTIFICADOR:id {: RESULT = new ArrayList<String>() {{add(id.toS
     :};
 
 type ::= PALAVRA_RESERVADA_INTEGER:int_word{:RESULT = int_word;:} |
-PALAVRA_RESERVADA_DECIMAL:float_word{:RESULT = float_word;:};
+PALAVRA_RESERVADA_DECIMAL:float_word{:RESULT = float_word;:} | error {:
+                parser.defineErro("Erro sintático: Tipo invalido");
+            :};
 
-stmt_list ::= stmt SEMICOLON | stmt_list stmt SEMICOLON ;
+stmt_list ::= stmt SEMICOLON | stmt_list stmt SEMICOLON | error {:
+                parser.defineErro("Erro sintático: Comando invalido - Sugestão checar ponto e virgula");
+            :};
 
 stmt ::= assign_stmt | if_stmt | while_stmt | do_while_stmt| for_stmt | read_stmt | write_stmt;
 
 assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
                     if (!isNumber(smpl_ex))
-                        System.out.println("Erro: Expressao nao numerica");
+                        parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico: Expressao nao numerica");
                     else if (smpl_ex instanceof Float){
                         if (symT.get(id.toString()) instanceof Integer)
-                            System.out.println("Erro: Atribuicao de decimal a inteiro");
+                            parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico : Atribuicao de decimal a inteiro");
                         else
                             symT.put(id.toString(), (Float)smpl_ex);
                     }
                     else{
                         if (symT.get(id.toString()) instanceof Float)
-                            System.out.println("Erro: Atribuicao de inteiro a decimal");
+                            parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico : Atribuicao de inteiro a decimal");
                         else
                             symT.put(id.toString(), (Integer)smpl_ex);
                     }
@@ -95,8 +117,11 @@ assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
 if_stmt ::= PALAVRA_RESERVADA_IF condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_END | PALAVRA_RESERVADA_IF
 condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_ELSE stmt_list PALAVRA_RESERVADA_END;
 
-condition ::= expression:exp {:if ( exp instanceof Boolean) RESULT = exp;
-                                else System.out.println("Erro: Expressao nao booleana");:};
+condition ::= expression:exp
+                {:
+                    if ( exp instanceof Boolean) RESULT = exp;
+                    else parser.defineErro(expleft,expright,"Erro Semântico: Expressao nao booleana");
+                :};
 
 do_while_stmt ::= PALAVRA_RESERVADA_DO stmt_list stmt_suffix;
 
@@ -136,7 +161,7 @@ expression ::= simple_expr:smpl_ex
                     if (exp instanceof Boolean)
                         RESULT = ((Boolean)exp).booleanValue() ? smpl_ax_a : smpl_ax_b;
                     else
-                        parser.defineErro(expleft,expright,"Erro: Expressao nao booleana");
+                        parser.defineErro(expleft,expright,"Erro Semântico : Expressao nao booleana");
                :};
 
 simple_expr ::= term:t
@@ -148,9 +173,9 @@ simple_expr ::= term:t
                         if (t instanceof Boolean && smpl_ex instanceof Boolean)
                             RESULT = ((Boolean)t).booleanValue() || ((Boolean)smpl_ex).booleanValue();
                         else
-                            parser.defineErro(smpl_exleft,smpl_exright,"Erro: Operador logico aplicado a um valor nao booleano");
+                            parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico: Operador logico aplicado a um valor nao booleano");
                     } else if(!isNumber(smpl_ex) || !isNumber(t)){
-                            parser.defineErro(smpl_exleft,smpl_exright,"Erro: Operador aritmetico aplicado a um valor nao numerico");
+                            parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico: Operador aritmetico aplicado a um valor nao numerico");
                      } else{
                          if (t instanceof Float){
                             if (addop.equals("+"))
@@ -164,7 +189,9 @@ simple_expr ::= term:t
                                 RESULT = ((Integer)smpl_ex).intValue() - ((Integer)t).intValue();
                          }
                      }
-                :};
+                :}
+                | error
+                {:parser.defineErro("Erro Sintático: Expressão invalida");:};
 
 term ::= factor_a:f_a
              {:RESULT = f_a;:}
@@ -175,11 +202,11 @@ term ::= factor_a:f_a
                     if (t instanceof Boolean && f_a instanceof Boolean)
                         RESULT = ((Boolean)t).booleanValue() && ((Boolean)f_a).booleanValue();
                     else
-                        parser.defineErro(tleft,tright,"Erro: Operador logico aplicado a um valor nao booleano");
+                        parser.defineErro(tleft,tright,"Erro Semântico: Operador logico aplicado a um valor nao booleano");
                 } else if(!isNumber(t) || !isNumber(f_a)){
-                    parser.defineErro(tleft,tright,"Erro: Operador aritmetico aplicado a um valor nao numerico");
+                    parser.defineErro(tleft,tright,"Erro Semântico: Operador aritmetico aplicado a um valor nao numerico");
                 } else if (  (mulop.equals("/")) && ((Integer)f_a).intValue() == 0){
-                    parser.defineErro(tleft,tright,"Erro: Divisao por zero");
+                    parser.defineErro(tleft,tright,"Erro Semântico: Divisao por zero");
                 }else if ((t instanceof Float)){
                     if (mulop.equals("*"))
                         RESULT = ((Float)t).floatValue() * ((Float)f_a).floatValue();
@@ -204,7 +231,7 @@ factor_a ::= factor:f
              {: if (f instanceof Boolean)
                     RESULT = !((Boolean)f).booleanValue();
                 else
-                    parser.defineErro(fleft,fright,"Erro: Operador not aplicado a um valor nao booleano");
+                    parser.defineErro(fleft,fright,"Erro Semântico: Operador not aplicado a um valor nao booleano");
              :}
              |
              OPERADOR_MINUS factor:f
@@ -213,7 +240,7 @@ factor_a ::= factor:f
                 else if (f instanceof Float)
                     RESULT = -((Float)f).floatValue();
                 else
-                    parser.defineErro(fleft,fright,"Erro: Operador unario aplicado a um valor nao numerico");
+                    parser.defineErro(fleft,fright,"Erro Semântico: Operador unario aplicado a um valor nao numerico");
               :};
 
 factor ::=  IDENTIFICADOR:id
@@ -221,7 +248,7 @@ factor ::=  IDENTIFICADOR:id
                 if (symT.containsKey(id.toString()))
                     RESULT = symT.get(id.toString());
                 else
-                    parser.defineErro(idleft,idright,"Erro: Variavel nao declarada");
+                    parser.defineErro(idleft,idright,"Erro Semântico: Variavel nao declarada");
             :}
             |
             CONSTANT:c

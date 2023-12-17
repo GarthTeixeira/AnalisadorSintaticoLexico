@@ -28,6 +28,17 @@ import java_cup.runtime.Symbol;
       }
 
 
+      	public void defineErro(int linha, int coluna) {
+      		listaErros.defineErro(linha, coluna);
+      	}
+
+
+      	public void defineErro(String texto) {
+      		listaErros.defineErro(texto);
+      	}
+
+
+
       private Symbol addToken(int tokenType,String value, String vaueType, int line, int column) {
         System.out.print(vaueType + yytext() + " linha:" + String.valueOf(line) + ", coluna:"+ String.valueOf(column) +" \n");
         return new Symbol(tokenType,line,column, value);
@@ -93,7 +104,6 @@ unsignedLeftShift = "<<<"
 interrogation = "?"
 colon = ":"
 
-invalidIdentifier = {digit}({letter}|{digit})*{letter}
 
 %%
 
@@ -150,5 +160,7 @@ invalidIdentifier = {digit}({letter}|{digit})*{letter}
 {interrogation} {return addToken(TiposDeToken.INTERROGATION, yytext(),"Interrogação " ,yyline , yycolumn);}
 {colon} {return addToken(TiposDeToken.COLON, yytext(),"Dois pontos " ,yyline , yycolumn);}
 
-  {invalidIdentifier} {return addToken(TiposDeToken.EOF, yytext(),"Identificador inválido !!!" ,yyline , yycolumn);}
-. { return addToken(TiposDeToken.EOF, yytext(), "Caractere invalido!!!!", yyline, yycolumn); }
+. {
+    defineErro(yyline, yycolumn, "Erro Léxico: Caractere " + yytext() + " invalido!!!!");
+    //return addToken(TiposDeToken.EOF, yytext(), "Caractere invalido!!!!", yyline, yycolumn);
+}
