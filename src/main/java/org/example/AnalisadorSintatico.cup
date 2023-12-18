@@ -16,7 +16,13 @@ parser code {:
 
   public void syntax_error(Symbol s){
           this.defineErro(s.left, s.right);
-  	}
+  }
+
+  public void unrecovered_syntax_error(Symbol cur_token){
+
+  }
+
+
 
   public void defineErro(int linha, int coluna, String texto)
   {
