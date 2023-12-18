@@ -252,7 +252,7 @@ term ::= factor_a:f_a
                         parser.defineErro(tleft,tright,"Erro Semântico: Operador logico aplicado a um valor nao booleano");
                 } else if(!isNumber(t) || !isNumber(f_a)){
                     parser.defineErro(tleft,tright,"Erro Semântico: Operador aritmetico aplicado a um valor nao numerico");
-                } else if (  (mulop.equals("/")) && ((Integer)f_a).intValue() == 0){
+                } else if (  (mulop.equals("/")) && ((Float)f_a).intValue() == 0){
                     parser.defineErro(tleft,tright,"Erro Semântico: Divisao por zero");
                 }else if ((t instanceof Float)){
                     if (mulop.equals("*"))

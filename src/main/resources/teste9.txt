@@ -1,1 +1,14 @@
-ESCREVER
+program teste9
+declare
+    integer var, countx, county;
+begin
+    var := 10;
+    for countx := 0 to countx < var*5 do
+        while county < 5 do
+          write(countx);
+          write(county);
+          county := county + 1;
+        end;
+        countx := countx + 1;
+    end;
+end

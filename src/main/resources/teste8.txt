@@ -1,1 +1,13 @@
-ESCREVER
+program teste8
+declare
+    decimal a, b, c, d ;
+begin
+    a := 10.0;
+    b := 2;
+    c := a/b;
+    write(c);
+    c := a/d;
+    write(c);
+    a := a + 1;
+    write(a);
+end
