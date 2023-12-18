@@ -41,9 +41,12 @@ public class ListaErros {
      */
     public void dump(String fileTest) {
         String aux = fileTest.replace(".txt","") + "Output.txt";
+        String buffer = "";
         for (Erro e: this.erros) {
             e.imprime(aux);
+            buffer = e.joinErroToFile(buffer);
         }
+        Erro.printToFile(buffer, aux);
     }
 
     public boolean hasErros(){

@@ -48,7 +48,19 @@ public class Erro {
             aux += this.texto;
 
         System.out.println(aux);
-        printToFile(aux, outputFilePath);
+    }
+
+    public String joinErroToFile(String buffer){
+        String aux = buffer;
+        aux +=  "linha:" + this.linha +", coluna:" + this.coluna + ", ";
+
+        if(this.texto == null)
+            aux += " erro indefinido!";
+        else
+            aux += this.texto;
+
+        aux += "\n";
+        return aux;
     }
 
 
