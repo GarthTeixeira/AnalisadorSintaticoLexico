@@ -224,16 +224,26 @@ simple_expr ::= term:t
                     } else if(!isNumber(smpl_ex) || !isNumber(t)){
                             parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico: Operador aritmetico aplicado a um valor nao numerico");
                      } else{
-                         if (t instanceof Float){
+                         if (t instanceof Float && smpl_ex instanceof Float){
                             if (addop.equals("+"))
                                 RESULT = ((Float)smpl_ex).floatValue() + ((Float)t).floatValue();
                             else if (addop.equals("-"))
                                 RESULT = ((Float)smpl_ex).floatValue() - ((Float)t).floatValue();
-                         }else {
+                         }else if (t instanceof Integer && smpl_ex instanceof Integer){
                             if (addop.equals("+"))
                                 RESULT = ((Integer)smpl_ex).intValue() + ((Integer)t).intValue();
                             else if (addop.equals("-"))
                                 RESULT = ((Integer)smpl_ex).intValue() - ((Integer)t).intValue();
+                         } else if (smpl_ex instanceof Float && t instanceof Integer){
+                            if (addop.equals("+"))
+                                RESULT = ((Float)smpl_ex).floatValue() + ((Integer)t).intValue();
+                            else if (addop.equals("-"))
+                                RESULT = ((Float)smpl_ex).floatValue() - ((Integer)t).intValue();
+                         } else if (t instanceof Integer && smpl_ex instanceof Float){
+                            if (addop.equals("+"))
+                                RESULT = ((Integer)smpl_ex).intValue() + ((Float)t).floatValue();
+                            else if (addop.equals("-"))
+                                RESULT = ((Integer)smpl_ex).intValue() - ((Float)t).floatValue();
                          }
                      }
                 :}
@@ -252,24 +262,49 @@ term ::= factor_a:f_a
                         parser.defineErro(tleft,tright,"Erro Semântico: Operador logico aplicado a um valor nao booleano");
                 } else if(!isNumber(t) || !isNumber(f_a)){
                     parser.defineErro(tleft,tright,"Erro Semântico: Operador aritmetico aplicado a um valor nao numerico");
-                } else if (  (mulop.equals("/")) && ((Float)f_a).intValue() == 0){
-                    parser.defineErro(tleft,tright,"Erro Semântico: Divisao por zero");
-                }else if ((t instanceof Float)){
+                } else if ((t instanceof Float) && (f_a instanceof Float)){
                     if (mulop.equals("*"))
                         RESULT = ((Float)t).floatValue() * ((Float)f_a).floatValue();
-                    else if (mulop.equals("/"))
-                        RESULT = ((Float)t).floatValue() / ((Float)f_a).floatValue();
-                    else if (mulop.equals("%"))
+                    else if (mulop.equals("/")){
+                        if (((Float)f_a).floatValue() == 0.0)
+                            parser.defineErro(tleft,tright,"Erro Semântico: Divisao por zero");
+                        else RESULT = ((Float)t).floatValue() / ((Float)f_a).floatValue();
+                    }
+                    else if (mulop.equals("mod"))
                         RESULT = ((Float)t).floatValue() % ((Float)f_a).floatValue();
-                } else {
+                } else if ((t instanceof Integer) && (f_a instanceof Integer)){
                     if (mulop.equals("*"))
                         RESULT = ((Integer)t).intValue() * ((Integer)f_a).intValue();
-                    else if (mulop.equals("/"))
-                        RESULT = ((Integer)t).intValue() / ((Integer)f_a).intValue();
-                    else if (mulop.equals("%"))
+                    else if (mulop.equals("/")){
+                        if (((Integer)f_a).intValue() == 0)
+                            parser.defineErro(tleft,tright,"Erro Semântico: Divisao por zero");
+                        else RESULT = ((Integer)t).intValue() / ((Integer)f_a).intValue();
+                    }else if (mulop.equals("mod"))
                         RESULT = ((Integer)t).intValue() % ((Integer)f_a).intValue();
+                } else if ((t instanceof Float) && (f_a instanceof Integer)){
+                    if (mulop.equals("*"))
+                        RESULT = ((Float)t).floatValue() * ((Integer)f_a).intValue();
+                    else if (mulop.equals("/")){
+                        if (((Integer)f_a).intValue() == 0)
+                            parser.defineErro(tleft,tright,"Erro Semântico: Divisao por zero");
+                        else RESULT = ((Float)t).floatValue() / ((Integer)f_a).intValue();
+                    }
+                    else if (mulop.equals("mod"))
+                        RESULT = ((Float)t).floatValue() % ((Integer)f_a).intValue();
+                } else if ((t instanceof Integer) && (f_a instanceof Float)){
+                    if (mulop.equals("*"))
+                        RESULT = ((Integer)t).intValue() * ((Float)f_a).floatValue();
+                    else if (mulop.equals("/")){
+                        if (((Float)f_a).floatValue() == 0.0)
+                            parser.defineErro(tleft,tright,"Erro Semântico: Divisao por zero");
+                        else RESULT = ((Integer)t).intValue() / ((Float)f_a).floatValue();
+                    }
+                    else if (mulop.equals("mod"))
+                        RESULT = ((Integer)t).intValue() % ((Float)f_a).floatValue();
                 }
-             :};
+             else
+                parser.defineErro(tleft,tright,"Erro Semântico: Operador aritmetico aplicado a um valor nao numerico");
+        :};
 
 factor_a ::= factor:f
             {:RESULT = f;:}
@@ -295,7 +330,7 @@ factor ::=  IDENTIFICADOR:id
                 if (symT.containsKey(id.toString()))
                     RESULT = symT.get(id.toString());
                 else
-                    parser.defineErro(idleft,idright,"Erro Semântico: Variavel " + id.toString() + " não declarada");
+                    parser.defineErro(idleft,idright,"Erro Semântico: Variável " + id.toString() + " não declarada");
             :}
             |
             CONSTANT:c
