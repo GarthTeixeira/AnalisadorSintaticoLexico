@@ -95,23 +95,30 @@ stmt_list ::= stmt SEMICOLON | stmt_list stmt SEMICOLON | error {:
                 parser.defineErro("Erro sintático: Comando invalido - Sugestão checar ponto e virgula");
             :};
 
-stmt ::= assign_stmt | if_stmt | while_stmt | do_while_stmt| for_stmt | read_stmt | write_stmt;
+stmt ::= assign_stmt | if_stmt | while_stmt | do_while_stmt| for_stmt | read_stmt | write_stmt | error {:
+                parser.defineErro("Erro sintático: Comando invalido");
+            :};
 
 assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
-                    if (!isNumber(smpl_ex))
-                        parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico: Expressao nao numerica");
-                    else if (smpl_ex instanceof Float){
-                        if (symT.get(id.toString()) instanceof Integer)
-                            parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico : Atribuicao de decimal a inteiro");
-                        else
-                            symT.put(id.toString(), (Float)smpl_ex);
-                    }
+                    if (!isDeclared(id.toString()))
+                        parser.defineErro(idleft,idright,"Erro Semântico: Variavel nao declarada");
                     else{
-                        if (symT.get(id.toString()) instanceof Float)
-                            parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico : Atribuicao de inteiro a decimal");
-                        else
-                            symT.put(id.toString(), (Integer)smpl_ex);
+                        if (!isNumber(smpl_ex))
+                            parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico: Expressao nao numerica");
+                        else if (smpl_ex instanceof Float){
+                            if (symT.get(id.toString()) instanceof Integer)
+                                parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico : Atribuicao de decimal a inteiro");
+                            else
+                                symT.put(id.toString(), (Float)smpl_ex);
+                        }
+                        else{
+                            if (symT.get(id.toString()) instanceof Float)
+                                parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico : Atribuicao de inteiro a decimal");
+                            else
+                                symT.put(id.toString(), (Integer)smpl_ex);
+                        }
                     }
+
 :};
 
 if_stmt ::= PALAVRA_RESERVADA_IF condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_END | PALAVRA_RESERVADA_IF
