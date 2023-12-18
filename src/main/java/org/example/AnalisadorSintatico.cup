@@ -55,7 +55,7 @@ terminal Float FLOAT_CONSTANT;
 
 non terminal program, body, decl_list, decl, type, stmt_list, stmt, assign_stmt, if_stmt, condition,
 do_while_stmt, stmt_suffix, for_stmt, while_stmt, read_stmt, write_stmt, writable, expression, simple_expr, term,
-factor_a, factor, relop, addop, mulop, shiftop;
+factor_a, factor, relop, addop, mulop, shiftop, ternary_expr;
 
 non terminal List<String> ident_list;
 
@@ -109,7 +109,7 @@ stmt ::= assign_stmt | if_stmt | while_stmt | do_while_stmt| for_stmt | read_stm
 
 assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
                     if (!isDeclared(id.toString()))
-                        parser.defineErro(idleft,idright,"Erro Semântico: Variavel nao declarada");
+                        parser.defineErro(idleft,idright,"Erro Semântico: Variavel " + id.toString() + " não declarada");
                     else{
                         if (!isNumber(smpl_ex))
                             parser.defineErro(smpl_exleft,smpl_exright,"Erro Semântico: Expressao nao numerica");
@@ -126,8 +126,24 @@ assign_stmt ::= IDENTIFICADOR:id OPERADOR_ASSIGN simple_expr:smpl_ex {:
                                 symT.put(id.toString(), (Integer)smpl_ex);
                         }
                     }
-
-:};
+                :}
+                 |
+                 IDENTIFICADOR:id OPERADOR_ASSIGN ternary_expr:tern_ex{:
+                    if (!isNumber(tern_ex))
+                        parser.defineErro(tern_exleft,tern_exright,"Erro Semântico: Expressao nao numerica");
+                    else if (tern_ex instanceof Float){
+                        if (symT.get(id.toString()) instanceof Integer)
+                            parser.defineErro(tern_exleft,tern_exright,"Erro Semântico : Atribuicao de decimal a inteiro");
+                        else
+                            symT.put(id.toString(), (Float)tern_ex);
+                    }
+                    else{
+                        if (symT.get(id.toString()) instanceof Float)
+                            parser.defineErro(tern_exleft,tern_exright,"Erro Semântico : Atribuicao de inteiro a decimal");
+                        else
+                            symT.put(id.toString(), (Integer)tern_ex);
+                    }
+                 :};
 
 if_stmt ::= PALAVRA_RESERVADA_IF condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_END | PALAVRA_RESERVADA_IF
 condition PALAVRA_RESERVADA_THEN stmt_list PALAVRA_RESERVADA_ELSE stmt_list PALAVRA_RESERVADA_END;
@@ -147,7 +163,16 @@ PALAVRA_RESERVADA_END;
 
 while_stmt ::= PALAVRA_RESERVADA_WHILE condition PALAVRA_RESERVADA_DO stmt_list PALAVRA_RESERVADA_END;
 
-read_stmt ::= PALAVRA_RESERVADA_READ LEFT_PARENTHESIS IDENTIFICADOR RIGHT_PARENTHESIS;
+read_stmt ::= PALAVRA_RESERVADA_READ LEFT_PARENTHESIS IDENTIFICADOR:id RIGHT_PARENTHESIS{:
+                    if (!isDeclared(id.toString()))
+                        parser.defineErro(idleft,idright,"Erro Semântico: Variavel " + id.toString() + " não declarada");
+                    else{
+                        if (symT.get(id.toString()) instanceof Integer)
+                            symT.put(id.toString(), new Integer(0));
+                        else
+                            symT.put(id.toString(), new Float(0));
+                    }
+:};
 
 write_stmt ::= PALAVRA_RESERVADA_WRITE LEFT_PARENTHESIS writable:w RIGHT_PARENTHESIS {:System.out.println(w);:} ;
 
@@ -158,6 +183,9 @@ expression ::= simple_expr:smpl_ex
                |
                simple_expr:smpl_ex_a relop:relop simple_expr:smpl_ex_b
                {:
+               if (!isNumber(smpl_ex_a) || !isNumber(smpl_ex_b))
+                    parser.defineErro(smpl_ex_aleft,smpl_ex_bright,"Erro Semântico: Expressão não numerica - Sugestão checar operadores e precedência");
+                else {
                     if (relop.equals("="))
                         RESULT = new Boolean(((Integer)smpl_ex_a).intValue() == ((Integer)smpl_ex_b).intValue());
                     else if (relop.equals(">"))
@@ -170,14 +198,18 @@ expression ::= simple_expr:smpl_ex
                         RESULT = new Boolean(((Integer)smpl_ex_a).intValue() <= ((Integer)smpl_ex_b).intValue());
                     else if (relop.equals("<>"))
                         RESULT = new Boolean(((Integer)smpl_ex_a).intValue() != ((Integer)smpl_ex_b).intValue());
+                    }
                :}
-               | LEFT_PARENTHESIS expression:exp RIGHT_PARENTHESIS INTERROGATION simple_expr:smpl_ax_a COLON simple_expr:smpl_ax_b
-               {:
+               | ternary_expr:tern_ex
+               {:RESULT = tern_ex;:};
+
+ternary_expr ::= LEFT_PARENTHESIS expression:exp RIGHT_PARENTHESIS INTERROGATION simple_expr:smpl_ex_b COLON simple_expr:smpl_ex_c
+                {:
                     if (exp instanceof Boolean)
-                        RESULT = ((Boolean)exp).booleanValue() ? smpl_ax_a : smpl_ax_b;
+                        RESULT = ((Boolean)exp).booleanValue() ? smpl_ex_b : smpl_ex_c;
                     else
-                        parser.defineErro(expleft,expright,"Erro Semântico : Expressao nao booleana");
-               :};
+                        parser.defineErro(expleft,expright,"Erro Semântico : Expressao nao booleana na codincao ternária");
+                :};
 
 simple_expr ::= term:t
                 {:RESULT = t;:}
@@ -263,7 +295,7 @@ factor ::=  IDENTIFICADOR:id
                 if (symT.containsKey(id.toString()))
                     RESULT = symT.get(id.toString());
                 else
-                    parser.defineErro(idleft,idright,"Erro Semântico: Variavel nao declarada");
+                    parser.defineErro(idleft,idright,"Erro Semântico: Variavel " + id.toString() + " não declarada");
             :}
             |
             CONSTANT:c
