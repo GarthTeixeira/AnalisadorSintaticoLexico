@@ -39,9 +39,10 @@ public class ListaErros {
     /**
      * Imprime erro por erro
      */
-    public void dump() {
+    public void dump(String fileTest) {
+        String aux = fileTest.replace(".txt","") + "Output.txt";
         for (Erro e: this.erros) {
-            e.imprime();
+            e.imprime(aux);
         }
     }
 

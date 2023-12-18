@@ -55,7 +55,9 @@ non terminal List<String> ident_list;
 
 start with program;
 
-program ::= PALAVRA_RESERVADA_PROGRAM IDENTIFICADOR body;
+program ::= PALAVRA_RESERVADA_PROGRAM IDENTIFICADOR body | error {:
+                parser.defineErro("Erro sintático: verifique o inicio e o fim do programa");
+            :};
 
 body ::= PALAVRA_RESERVADA_DECLARE decl_list PALAVRA_RESERVADA_BEGIN stmt_list PALAVRA_RESERVADA_END | error {:
                 parser.defineErro("Erro sintático: Corpo do programa invalido");
@@ -70,7 +72,7 @@ decl ::= type:type ident_list:id_list
 
         for (String id : id_list)
             if (isDeclared(id))
-                parser.defineErro( id_listleft,id_listright ,"Erro: Variavel ja declarada");
+                parser.defineErro( id_listleft,id_listright ,"Erro Semântico: Variavel ja declarada");
             else
                 if (type.equals("integer"))
                     symT.put(id, new Integer(0));
@@ -141,7 +143,7 @@ while_stmt ::= PALAVRA_RESERVADA_WHILE condition PALAVRA_RESERVADA_DO stmt_list 
 
 read_stmt ::= PALAVRA_RESERVADA_READ LEFT_PARENTHESIS IDENTIFICADOR RIGHT_PARENTHESIS;
 
-write_stmt ::= PALAVRA_RESERVADA_WRITE LEFT_PARENTHESIS writable:w RIGHT_PARENTHESIS {:System.out.println(w);:};
+write_stmt ::= PALAVRA_RESERVADA_WRITE LEFT_PARENTHESIS writable:w RIGHT_PARENTHESIS {:System.out.println(w);:} ;
 
 writable ::= expression:ex{:RESULT = ex;:} | LITERAL:l{:RESULT = ((String) l).toString().replaceAll("\"","");:};
 

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    static String FILE_NAME = "teste8.txt";
+    static String FILE_NAME = "teste2.txt";
 
     static String [] allFilesNames = {"teste1.txt", "teste2.txt", "teste3.txt", "teste4.txt", "teste5.txt", "teste6.txt", "teste7.txt", "teste8.txt", "teste9.txt"};
 
@@ -54,7 +54,8 @@ public class Main {
                 System.out.println("Sintaxe Correta");
             } else {
                 System.out.println("Erros encontrados:");
-                listaErros.dump();
+                listaErros.dump("./src/main/" + FILE_NAME);
+
             }
 
         } catch (Exception e) {

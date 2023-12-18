@@ -1,4 +1,7 @@
 package org.example;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Erro {
 
@@ -26,7 +29,16 @@ public class Erro {
         this.texto = null;//"Erro não definido";
     }
 
-    public void imprime(){
+    public static void printToFile(String message, String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erro ao imprimir mensagem no arquivo: " + e.getMessage());
+        }
+    }
+
+    public void imprime(String outputFilePath){
         String aux = "";
         aux =  "linha:" + this.linha +", coluna:" + this.coluna + ", ";
 
@@ -36,6 +48,7 @@ public class Erro {
             aux += this.texto;
 
         System.out.println(aux);
+        printToFile(aux, outputFilePath);
     }
 
 
